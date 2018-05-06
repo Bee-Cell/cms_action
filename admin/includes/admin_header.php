@@ -1,3 +1,25 @@
+<?php ob_start(); //output buffering ?> 
+<?php 
+    include("../includes/db_connection.php"); 
+    include("functions.php");
+     session_start();
+    if(isset($_SESSION['user_role'])) {
+
+
+
+    } else {
+
+   // header("location: ../index.php");
+
+
+    }
+
+
+
+
+ ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 

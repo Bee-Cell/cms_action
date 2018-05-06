@@ -1,7 +1,8 @@
 
 <?php
-    include("../includes/db_connection.php");
+    
     include("./includes/admin_header.php");
+    
 ?>
     <div id="wrapper">
 
@@ -25,61 +26,65 @@
                         <div class="col-xs-6">
 
                             <?php
-                                if(isset($_POST["submitting_category"])){
-                                    $title = $_POST["cat_title"];
-                                    if($title =="" || empty($title)){
-                                        echo "The field should not be empty";
-                                    }
-                                    else{
-                                        $query = "INSERT INTO `categories`(`category_id`, `category_title`) VALUES (null,'$title')";
-                                        $resultset = mysqli_query($connection, $query);
-
-                                        if(!$resultset){
-                                            die("Failed!".mysqli_error($connection));
-                                        }
-                                    }
-                                    
-
-
-                                }
+                            //insert function or action
+                                insert_categories();
                             ?>
                             <form action="" method="POST">
                                 <div class="form-group">
-                                    <label for="cat_title"> Add Category</label>
+                                    <label for="cat_title">ADD CATEGORIES</label>
                                     <input type="text" class="form-control" name="cat_title">
                                 </div>
                                 <div class="form-group">
                                     <input type="submit" class="btn btn-primary" name="submitting_category" value="Add Category" >
                                 </div>
                             </form>
+                            <hr>
+
+                            <!-- For the edit here -->
+                            <?php
+
+                                if(isset($_GET["edit_id"]))
+                                {
+                                    // $cat_id = $_GET["edit_id"]; // if we set here it is automatically passed to include file
+                                    include("./includes/edit_categories.php");
+                                }
+
+                                
+                            ?>
+
+
+
+                           
+
+
                          </div>
 
                          <!-- Another side display -->
 
                          <div class="col-xs-6">
                             <table class="table table-bordered table-hover">
-                                <?php
+                                
+                                    <!-- for displaying all categories  -->
                                     
-                                    $query = "SELECT *FROM categories";
-                                    $select_all_categories_query = mysqli_query($connection, $query);
-
-                                ?>
+                              
                                 <thead>
                                     <tr>
                                         <th>Id</th>
                                         <th>Category Title</th>
+                                        <th>EDIT || DELETE</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                        while($row = mysqli_fetch_array($select_all_categories_query)){
-                                            ?>
-                                                 <tr>
-                                                    <td><?php echo $row["category_id"];?></td>
-                                                    <td><?php echo $row["category_title"];?></td>
-                                                </tr>
-                                        <?php
-                                        }
+                                    //select all action
+                                       find_all_categories();
+                                    ?>
+
+                                    <?php
+                                        //for delete action 
+                                       delete_selected_category();
+
+
                                     ?>
                                     
                                 </tbody>
